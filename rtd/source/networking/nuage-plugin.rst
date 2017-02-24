@@ -21,12 +21,12 @@ Introduction
 ------------
 
 The Nuage VSP plugin is the Nuage Networks SDN
-implementation in CloudStack, which integrates with Release 3.2 of the
+implementation in CloudStack, which integrates with Release 4.0 of the
 Nuage Networks Virtualized Services Platform.
 The plugin can be used by CloudStack to leverage the scalability and rich features of Advanced SDN and to implement:
 
 * Isolated Guest Networks
-* Virtual Private Clouds (VPCs)
+* Virtual Private Clouds (VPC)
 * Shared Networks
 
 For more information about Nuage Networks, visit www.nuagenetworks.net.
@@ -35,50 +35,45 @@ For more information about Nuage Networks, visit www.nuagenetworks.net.
 Features
 --------
 
-The following table lists the CloudStack network services provided by
-the Nuage VSP Plugin.
+The following table lists the supported Network services in a CloudStack deployment with NuageVsp being the Connectivity provider, with their providers.
 
 .. cssclass:: table-striped table-bordered table-hover
 
-+----------------------+----------------------+
-| Network Service      | CloudStack version   |
-+======================+======================+
-| Virtual Networking   | >= 4.5               |
-+----------------------+----------------------+
-| VPC                  | >= 4.5               |
-+----------------------+----------------------+
-| Source NAT           | >= 4.5               |
-+----------------------+----------------------+
-| Static NAT           | >= 4.5               |
-+----------------------+----------------------+
-| Firewall             | >= 4.5               |
-+----------------------+----------------------+
-| Network ACL          | >= 4.5               |
-+----------------------+----------------------+
-| User Data (*)        | >= 4.7               |
-+----------------------+----------------------+
-
-(*) Through the use of VR Provider
++----------------------+----------------------+----------------------+----------------------+
+| Network Service      | Isolated Network     | VPC                  | Shared Network       |
++======================+======================+======================+======================+
+| Connectivity         | NuageVsp             | NuageVsp             | NuageVsp             |
++----------------------+----------------------+----------------------+----------------------+
+| Dhcp                 | NuageVsp             | NuageVsp             | NuageVsp             |
++----------------------+----------------------+----------------------+----------------------+
+| SourceNat            | NuageVsp             | NuageVsp             | N/A                  |
++----------------------+----------------------+----------------------+----------------------+
+| StaticNat            | NuageVsp             | NuageVsp             | N/A                  |
++----------------------+----------------------+----------------------+----------------------+
+| Firewall             | NuageVsp             | N/A                  | N/A                  |
++----------------------+----------------------+----------------------+----------------------+
+| NetworkACL           | N/A                  | NuageVsp             | N/A                  |
++----------------------+----------------------+----------------------+----------------------+
+| UserData             | VirtualRouter        | VirtualRouter        | N/A                  |
++----------------------+----------------------+----------------------+----------------------+
+| Dns                  | VirtualRouter        | VirtualRouter        | N/A                  |
++----------------------+----------------------+----------------------+----------------------+
 
 Table: Supported Services
-
-.. note::
-   The Virtual Networking service was originally called 'Connectivity'
-   in CloudStack 4.0
 
 The following hypervisors are supported by the Nuage VSP Plugin.
 
 .. cssclass:: table-striped table-bordered table-hover
 
-+--------------+----------------------+
-| Hypervisor   | CloudStack version   |
-+==============+======================+
-| XenServer    | >= 4.5               |
-+--------------+----------------------+
-| VmWare ESXi  | >= 4.5               |
-+--------------+----------------------+
-| KVM          | >= 4.7               |
-+--------------+----------------------+
++----------------------+----------------------+----------------------+----------------------+
+| Hypervisor           | Isolated Network     | VPC                  | Shared Network       |
++======================+======================+======================+======================+
+| KVM                  | >= 4.5               | >= 4.5               | >= 4.5               |
++----------------------+----------------------+----------------------+----------------------+
+| ESXI 5.5             | >= 4.5               | >= 4.5               | >= 4.5               |
++----------------------+----------------------+----------------------+----------------------+
+| ESXI 6.0             | >= 4.9               | >= 4.9               | >= 4.9               |
++----------------------+----------------------+----------------------+----------------------+
 
 Table: Supported Hypervisors
 
@@ -96,10 +91,18 @@ Before building and using the Nuage plugin for ACS 4.7, verify that the platform
 Supported Versions
 ~~~~~~~~~~~~~~~~~~
 
-* Nuage VSP 3.2
-* Apache CloudStack 4.7
-* Citrix XenServer 6.2
-* KVM on Enterprise Linux 7.x
+.. cssclass:: table-striped table-bordered table-hover
+
++----------------------+----------------------+----------------------+----------------------+
+| Nuage VSP Platform   | Isolated Network     | VPC                  | Shared Network       |
++======================+======================+======================+======================+
+| Nuage VSP 3.2        | >= 4.5               | >= 4.5               | >= 4.5               |
++----------------------+----------------------+----------------------+----------------------+
+| Nuage VSP 4.0        | >= 4.10              | >= 4.10              | >= 4.10              |
++----------------------+----------------------+----------------------+----------------------+
+
+Table: Supported Nuage VSP Platform Versions
+
 
 Required VSD Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
