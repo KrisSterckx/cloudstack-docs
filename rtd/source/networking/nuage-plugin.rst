@@ -17,13 +17,14 @@
 The Nuage VSP Plugin
 ====================
 
+
 Introduction
 ------------
 
-The Nuage VSP plugin is the Nuage Networks SDN
-implementation in CloudStack, which integrates with Release 4.0 of the
-Nuage Networks Virtualized Services Platform.
-The plugin can be used by CloudStack to leverage the scalability and rich features of Advanced SDN and to implement:
+The Nuage VSP Plugin is the Nuage Networks SDN
+implementation in CloudStack, which integrates with Nuage Networks
+Virtualized Services Platform (VSP).
+The plugin can be used by CloudStack to leverage the scalability and rich features of advanced SDN being provided by the Nuage VSP SDN Platform and to implement:
 
 * Isolated Guest Networks
 * Virtual Private Clouds (VPC)
@@ -31,96 +32,118 @@ The plugin can be used by CloudStack to leverage the scalability and rich featur
 
 For more information about Nuage Networks, visit www.nuagenetworks.net.
 
+Supported Features
+~~~~~~~~~~~~~~~~~~
 
-Features
---------
-
-The following table lists the supported Network services in a CloudStack deployment with NuageVsp being the Connectivity provider, with their providers.
-
-.. cssclass:: table-striped table-bordered table-hover
-
-+----------------------+----------------------+----------------------+----------------------+
-| Network Service      | Isolated Network     | VPC                  | Shared Network       |
-+======================+======================+======================+======================+
-| Connectivity         | NuageVsp             | NuageVsp             | NuageVsp             |
-+----------------------+----------------------+----------------------+----------------------+
-| Dhcp                 | NuageVsp             | NuageVsp             | NuageVsp             |
-+----------------------+----------------------+----------------------+----------------------+
-| SourceNat            | NuageVsp             | NuageVsp             | N/A                  |
-+----------------------+----------------------+----------------------+----------------------+
-| StaticNat            | NuageVsp             | NuageVsp             | N/A                  |
-+----------------------+----------------------+----------------------+----------------------+
-| Firewall             | NuageVsp             | N/A                  | N/A                  |
-+----------------------+----------------------+----------------------+----------------------+
-| NetworkACL           | N/A                  | NuageVsp             | N/A                  |
-+----------------------+----------------------+----------------------+----------------------+
-| UserData             | VirtualRouter        | VirtualRouter        | N/A                  |
-+----------------------+----------------------+----------------------+----------------------+
-| Dns                  | VirtualRouter        | VirtualRouter        | N/A                  |
-+----------------------+----------------------+----------------------+----------------------+
-
-Table: Supported Services
-
-The following hypervisors are supported by the Nuage VSP Plugin.
+The following table lists the supported Network services in a CloudStack deployment with NuageVsp being the Connectivity/Virtual Networking provider, with their providers and supported CloudStack versions.
 
 .. cssclass:: table-striped table-bordered table-hover
 
-+----------------------+----------------------+----------------------+----------------------+
-| Hypervisor           | Isolated Network     | VPC                  | Shared Network       |
-+======================+======================+======================+======================+
-| KVM                  | >= 4.5               | >= 4.5               | >= 4.5               |
-+----------------------+----------------------+----------------------+----------------------+
-| ESXI 5.5             | >= 4.5               | >= 4.5               | >= 4.5               |
-+----------------------+----------------------+----------------------+----------------------+
-| ESXI 6.0             | >= 4.9               | >= 4.9               | >= 4.9               |
-+----------------------+----------------------+----------------------+----------------------+
++---------------------------+---------------------------+---------------------------+---------------------------+
+| Network Service           | Isolated Networks         | VPCs                      | Shared Networks           |
++===========================+===========================+===========================+===========================+
+| Virtual Networking        | NuageVsp (>=4.5)          | NuageVsp (>=4.5)          | NuageVsp (>=4.10)         |
++---------------------------+---------------------------+---------------------------+---------------------------+
+| Dhcp                      | NuageVsp (>=4.5)          | NuageVsp (>=4.5)          | NuageVsp (>=4.10)         |
++---------------------------+---------------------------+---------------------------+---------------------------+
+| SourceNat                 | NuageVsp (>=4.10)         | NuageVsp (>=4.10)         | N/A                       |
++---------------------------+---------------------------+---------------------------+---------------------------+
+| StaticNat                 | NuageVsp (>=4.5)          | NuageVsp (>=4.5)          | N/A                       |
++---------------------------+---------------------------+---------------------------+---------------------------+
+| Firewall                  | NuageVsp (>=4.5)          | N/A                       | N/A                       |
++---------------------------+---------------------------+---------------------------+---------------------------+
+| NetworkACL                | N/A                       | NuageVsp (>=4.5)          | N/A                       |
++---------------------------+---------------------------+---------------------------+---------------------------+
+| UserData                  | VirtualRouter (>=4.5)     | VpcVirtualRouter (>=4.5)  | VirtualRouter (>=4.10)    |
++---------------------------+---------------------------+---------------------------+---------------------------+
+| Dns                       | VirtualRouter (>=4.10)    | VpcVirtualRouter (>=4.10) | N/A                       |
++---------------------------+---------------------------+---------------------------+---------------------------+
+| Internal Lb               | N/A                       | InternalLbVm (>=4.9)      | N/A                       |
++---------------------------+---------------------------+---------------------------+---------------------------+
+
+Table: Supported Network Services
+
+.. note::
+   The Virtual Networking service was originally called 'Connectivity'
+   in CloudStack 4.0
+
+Supported Hypervisors
+~~~~~~~~~~~~~~~~~~~~~
+
+The following hypervisors are supported by the Nuage VSP Plugin, with their supported CloudStack versions.
+
+.. cssclass:: table-striped table-bordered table-hover
+
++----------------------+----------------------+
+| Hypervisor           | CloudStack version   |
++======================+======================+
+| KVM 7.x              | >= 4.5               |
++----------------------+----------------------+
+| VMware ESXi 5.5      | >= 4.5               |
++----------------------+----------------------+
+| VMware ESXi 6.0      | >= 4.9               |
++----------------------+----------------------+
 
 Table: Supported Hypervisors
 
+Supported Nuage VSP SDN Platform Versions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Configuring the Nuage-VSP Plugin
+The following Nuage VSP SDN Platform versions are supported by the Nuage VSP Plugin, with their supported CloudStack versions.
+
+.. cssclass:: table-striped table-bordered table-hover
+
++----------------------+----------------------+
+| Nuage VSP version    | CloudStack version   |
++======================+======================+
+| Nuage VSP v3.2       | >= 4.5               |
++----------------------+----------------------+
+| Nuage VSP v4.0       | >= 4.10              |
++----------------------+----------------------+
+
+Table: Supported Nuage VSP SDN Platform Versions
+
+
+Configuring The Nuage VSP Plugin
 --------------------------------
 
 Prerequisites
 ~~~~~~~~~~~~~
 
-Before building and using the Nuage plugin for ACS 4.7, verify that the platform you intend to use is supported.
+Before enabling and using the Nuage VSP Plugin with CloudStack.
 
-.. Note:: Only the release notes for Nuage VSP contain the most up-to-date information on supported versions. Please check them to verify that the information below is current.
+1. Verify that the CloudStack deployment (hypervisors) and Nuage VSP SDN Platform version you intend to use is being supported.
 
-Supported Versions
-~~~~~~~~~~~~~~~~~~
+.. Note:: Only the release notes for Nuage VSP contain the most up-to-date information on different supported versions. Please check them to verify that the information in this document is up-to-date.
 
-.. cssclass:: table-striped table-bordered table-hover
+2. Prepare and configure the hypervisors for CloudStack integration with Nuage VSP SDN Platform.
 
-+----------------------+----------------------+----------------------+----------------------+
-| Nuage VSP Platform   | Isolated Network     | VPC                  | Shared Network       |
-+======================+======================+======================+======================+
-| Nuage VSP 3.2        | >= 4.5               | >= 4.5               | >= 4.5               |
-+----------------------+----------------------+----------------------+----------------------+
-| Nuage VSP 4.0        | >= 4.10              | >= 4.10              | >= 4.10              |
-+----------------------+----------------------+----------------------+----------------------+
+.. note::
+   Please refer to the Nuage VSP Install Guide on how to prepare the hypervisors for Nuage VSP SDN Platform integration.
 
-Table: Supported Nuage VSP Platform Versions
+Required Nuage VSD Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+When configuring Nuage VSP as the network service provider in a CloudStack Zone, a CSP user must be added in Nuage VSD, and this user must be added to the CMS group. See `Enable Nuage VSP Network Service Provider`_.
 
-Required VSD Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When configuring Nuage VSP as the network service provider, Nuage VSD must be added as a CSP user, and this user must be added to the CMS group. See `Enabling the Service Provider`_.
+.. note::
+   Nuage VSD is the programmable policy and analytics engine of the Nuage VSP SDN Platform with which the Nuage VSP Plugin interacts.
 
 Zone Configuration
 ~~~~~~~~~~~~~~~~~~
 
-Select VSP Isolation Method During Zone Creation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Select VSP Isolation Method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Nuage VSP solution is NOT supported in Basic zone provisioning mode. 
 
-1. When adding a zone, the ACS administrator should select **Advanced** mode in the zone wizard. 
+1. When adding a zone, the CloudStack administrator should select **Advanced** mode in the zone wizard.
 2. When laying out the physical network configuration during zone provisioning, the **Guest** network traffic should be put in a separate physical network of its own.
 3. This physical network carrying the **Guest** traffic should have **VSP** as the **Isolation Method**.
 
+.. figure:: ../_static/images/nuage_vsp_isolation_method_setting.png
+
+   Setting Isolation Method to VSP
 
 Update Traffic Labels
 ~~~~~~~~~~~~~~~~~~~~~
@@ -129,109 +152,199 @@ Update Traffic Labels
 
 Select **Edit** on the **Guest** traffic type panel and update the Traffic Label:
 
--  For XenServer, use **nuageManagedNetwork** as the **XenServer Traffic Label**.
 -  For KVM, use **alubr0** as the **KVM Traffic Label**.
 
-Enabling the Service Provider
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. figure:: ../_static/images/nuage_kvm_traffic_label.jpg
 
-Nuage VSP must be added to ACS as a Network Service Provider before it can be used. 
+   Specifying the Traffic Type in KVM
+
+-  For VMware ESXi, use the switch name used by **dVRS** for guest networking as the **vSwitch Name**, leave the **VLAN ID** field blank, and select **VMware vNetwork Distributed Switch** in the **vSwitch Type** drop down field.
+
+.. figure:: ../_static/images/nuage_vmware_traffic_label.jpg
+
+   Specifying the Traffic Type in VMware ESXi
+
+Enable Nuage VSP Network Service Provider
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Nuage VSP must be added and enabled as a Network Service Provider in the CloudStack Zone before it can be used.
 
 :Step 1: Select **Infrastructure > Zone > [zone name] > Physical Network 2 > Configure Network Service Providers > Nuage Vsp > +**, which brings up the **Add Nuage Virtualized Services Directory (VSD)** panel. 
 
-:Step 2: Enter the VSD **Host Name**, **Username** and **Password** that was previously created. 
+:Step 2: Enter the Nuage VSD **Host Name**, **Username** and **Password** that was previously created.
 
-:Step 3: Specify the VSD API version by entering the API version in the appropriate field (format: ``v3_2``).
+:Step 3: Specify the Nuage VSD API version by entering the API version in the appropriate field (format: ``v4_0``).
 
-:Step 4: *EITHER* Add **Nuage VSD** and click the **OK** button,
+:Step 4: *EITHER* Add **Nuage VSD** by clicking the **OK** button,
 
-         *OR* use API calls to configure Nuage VSP as the Network Provider; see `Nuage VSD API`_ in the Appendix of the current document.
+         *OR* use Nuage VSP API calls to configure Nuage VSP as a Network Service Provider in the CloudStack Zone; see `Configure Nuage VSP API`_ in the Appendix of this document.
 
-:Step 5: Go to **Infrastructure > Zones > [zone name] > Physical Network 2 > Network Service Providers > Nuage Vsp > Devices > Details** tab as shown in the figure "Enabling Nuage VSP" below. This indicates the state of Nuage VSP. Enable Nuage VSP by clicking **Enable**.
+.. figure:: ../_static/images/nuage_vsd_device_add.png
 
-:Step 6: (Optional) View the Nuage VSP status on the list of Network Service Providers on the **Infrastructure > Zones > [zone name] > Physical Network 2 > Network Service Providers** page;
+   Adding Nuage VSD as the Network Service Provider
+
+:Step 5: Go to **Infrastructure > Zones > [zone name] > Physical Network 2 > Network Service Providers > Nuage Vsp > Devices > Details** tab as shown in the figure "Enabling Nuage VSP Network Service Provider" below. This indicates the state of Nuage VSP Network Service Provider. Enable Nuage VSP Network Service Provider by clicking **Enable**.
+
+.. figure:: ../_static/images/nuage_vsp_nsp_enable.png
+
+   Enabling Nuage VSP Network Service Provider
+
+:Step 6: (Optional) View the Nuage VSP Network Service Provider status on the list of Network Service Providers on the **Infrastructure > Zones > [zone name] > Physical Network 2 > Network Service Providers** page;
+
+.. figure:: ../_static/images/nuage_vsp_nsp_status.png
+
+   Viewing Network Service Providers Status
+
+
+Using The Nuage VSP Plugin
+--------------------------
 
 Network Offerings
 ~~~~~~~~~~~~~~~~~
 
-There are two types of Network Offerings that can be created:
+There are three types of Network Offerings that can be created:
 
--  If Isolated Networks are required, then create a network offering for use with Isolated Networks.
--  If VPC deployments are required, then create a new network offering for that.
+-  If Isolated Networks are required, then create a **Isolated** guest type network offering for use with Isolated Networks.
+-  If VPC deployments are required, then create a new **Isolated** guest type network offering for such deployments.
+-  If Shared Networks are required, then create a new **Shared** guest type network offering for use with Shared Networks.
+
+.. note::
+   **Per Zone** MUST always be selected as the **Supported Source NAT type** when **Source NAT** service is being provided by **NuageVsp**.
 
 Create and Enable Isolated Network Offering
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1. Select **Service Offerings > Select Offering: Network Offerings > Add network offering**.
 
-2. In the **Supported Services** field select each of the following services - DHCP, Firewall, Source NAT, Static NAT, Virtual Networking and select Nuage VSP as the Provider.
+1. Select **Service Offerings > Select Offering: Network Offerings > Add network offering**, which brings up the **Add network offering**.
 
-3. If User Data service is desired in an Isolated Network, choose **VirtualRouter** as the User Data provider. **Per Zone** MUST be selected for the Source NAT Type for the Source NAT service.
+2. In the **Add network offering** panel, add a **Name** and a **Description** to the network offering. Select **Isolated** as the **Guest Type**. In the **Supported Services** field select services and providers that are supported by the Nuage VSP Plugin for Isolated Networks, see `Supported Features`_ at the beginning of this document.
 
-4. Click OK to create the offering. 
+3. Click the **OK** button to create the network offering.
 
-5. After the offering has been successfully created, enable it from the Service Offerings list.
+4. After the network offering has been successfully created, enable it from the **Service Offerings - Network Offerings** list.
 
 Create and Enable VPC Network Offering
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-1. Select **Service Offerings > Select Offering**: **Network Offerings > Add network offering**.
 
-2. Select the **VPC checkbox**. In the Supported Services field, select each of the following services and then select Nuage VSP as the Provider.
+1. Select **Service Offerings > Select Offering: Network Offerings > Add network offering**, which brings up the **Add network offering**.
 
-   *	DHCP
-   *	Source NAT
-   *  Static NAT
-   *	Virtual Networking 
+2. In the **Add network offering** panel, add a **Name** and a **Description** to the network offering. Select **Isolated** as the **Guest Type**. Select and check the **VPC** field. In the **Supported Services** field select services and providers that are supported by the Nuage VSP Plugin for VPCs, see `Supported Features`_ at the beginning of this document.
 
-3. (Optional) Select **VpcVirtualRouter** as the UserData provider if password reset or metadata feature is desired.
+3. Click the **OK** button to create the network offering.
 
-4. (Optional) If network ACL is required, select **NuageVsp** as the network ACL provider. 
+4. After the network offering has been successfully created, enable it from the **Service Offerings - Network Offerings** list.
 
-   a) Ensure the *Persistent* checkbox is selected.
-   b) As the *Supported Source NAT Type*, select **Per Zone**.
+Create and Enable Shared Network Offering
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-5.  After the offering has been successfully created, enable it from the Service Offerings list.
+1. Select **Service Offerings > Select Offering: Network Offerings > Add network offering**, which brings up the **Add network offering**.
 
-Dedicated Features That Come with Nuage VSP Plugin
---------------------------------------------------
+2. In the **Add network offering** panel, add a **Name** and a **Description** to the network offering. Select **Shared** as the **Guest Type**. In the **Supported Services** field select services and providers that are supported by the Nuage VSP Plugin for Shared Networks, see `Supported Features`_ at the beginning of this document.
 
-Domain Template Support for CloudStack in VSP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3. Click the **OK** button to create the network offering.
 
-Overview
-~~~~~~~~
+4. After the network offering has been successfully created, enable it from the **Service Offerings - Network Offerings** list.
 
-VSP's CloudStack plugin can be configured to use a VSD template when instantiating domains. The parameters and abstractions contained in the template are reused every time a new domain instance is created in CloudStack, and thus all the constructs defined in the template are available to the domain. 
-
-Configuration
+VPC Offerings
 ~~~~~~~~~~~~~
 
-Details of the global variables that have been added to support domain templates are listed below: 
+Pre-created and Enabled Nuage VSP VPC Offering
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:nuagevsp.isolatedntwk.domaintemplate.name: (Type: string) Name of the template to use for creation of domains for isolated networks.
+A VPC offering by the name **Nuage VSP VPC Offering** is pre-created and enabled in the list of **Service Offerings - VPC Offerings** (Select **Service Offerings > Select Offering: VPC Offerings**) which contains all the services and providers that are supported by the Nuage VSP Plugin for VPCs.
 
-:nuagevsp.vpc.domaintemplate.name: (Type: boolean) Name of the template to use for creation of domains for VPC.
+(Optional) Create and Enable VPC Offering
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To configure a domain template for use by CloudStack, use VSD to create a domain template, using the global CloudStack parameters listed above.
+1. Select **Service Offerings > Select Offering: VPC Offerings > Add VPC Offering**, which brings up the **Add VPC Offering**.
 
-.. Note:: There will be only a single domain instance for ``nuagevsp.vpc.domaintemplate.name``.
+2. In the **Add VPC Offering** panel, add a **Name** and a **Description** to the network offering. In the **Supported Services** field select services and providers that are supported by the Nuage VSP Plugin for VPCs, see `Supported Features`_ at the beginning of this document.
 
-Networks created in CloudStack will then use domain instances created from the template to which the name points.
+3. Click the **OK** button to create the VPC Offering.
+
+4. After the VPC Offering has been successfully created, enable it from the **Service Offerings - VPC Offerings** list.
+
+
+Dedicated Features Provided by The Nuage VSP Plugin
+---------------------------------------------------
+
+Nuage VSP Domain Template Feature Support for CloudStack
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All the constructs (parameters and abstractions) defined in a Nuage VSD domain template can be made available to domain instances (i.e. networks) created in CloudStack. To do this, configure the Nuage VSP Plugin to use a pre-created Nuage VSD domain template when instantiating domains (i.e. creating networks). Networks created in CloudStack will then use domain instances created from the domain template.
+
+Typical use-cases are:
+
+* The basic ACLs on the top and bottom that bracket or 'contain' the end-user's ACLs.
+* Leakable domains/GRT Leaking (Nuage VSP feature).
+
+To configure a Nuage VSP domain template for use by CloudStack, use the Nuage VSD Architect (VSP's GUI) to create a domain template and configure it in the following CloudStack global settings.
+
+.. cssclass:: table-striped table-bordered table-hover
+
++-------------------------------------------+---------+------------------------------------------------------------------------------------------+
+| Parameter                                 | Type    | Explanation                                                                              |
++===========================================+=========+==========================================================================================+
+| nuagevsp.isolatedntwk.domaintemplate.name | String  | Name of the Nuage VSP domain template to use for creating domains for isolated networks  |
++-------------------------------------------+---------+------------------------------------------------------------------------------------------+
+| nuagevsp.vpc.domaintemplate.name          | String  | Name of the Nuage VSP domain template to use for creating the domain for VPCs            |
++-------------------------------------------+---------+------------------------------------------------------------------------------------------+
+| nuagevsp.sharedntwk.domaintemplate.id     | UUID    | UUID of the Nuage VSP domain template to use for creating the domain for Shared Networks |
++-------------------------------------------+---------+------------------------------------------------------------------------------------------+
+
+Table: CloudStack Global Settings For Configuring Nuage VSP Domain Template Feature
+
+Nuage VSP Source NAT via the Underlay Feature Support For CloudStack
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+CloudStack provides Source NAT service to enable guest VMs to send traffic out to the Internet without requiring a Static NAT IP (public IP) assigned to the VM. The Source NAT service must be enabled as part of the network offering used for creating the guest network. When a network is created using this network offering, the first public IP from the assigned public IP range is automatically acquired as the Source NAT IP for the network. All VMs attached to this network then use that Source NAT IP to send traffic to the Internet.
+
+The Nuage VSP Plugin for CloudStack supports CloudStack's native Source NAT service and enhances it by restricting to a minimum the number of public IP addresses assigned to any given tenant. This is achieved by not allocating a Source NAT IP for every network that is created.
+
+The Source NAT service that Nuage VSP calls the Port Address Translation (PAT) feature uses the hypervisor IP as the Source NAT IP address for all VMs in the hypervisor that need to send traffic out to the Internet. Configure this during Nuage VSP installation using the instructions given in the Nuage VSP Install Guide.
+
+This feature is supported for both VPCs and Isolated Networks. In the case of VPCs, Source NAT is applied at the Nuage VSP domain level, therefore there is no customization on the individual VPC network (tier) level.
+
+All VPCs and Isolated networks that are created from a Nuage VSP Source NAT-enabled network offering have this feature enabled automatically. An example Nuage VSP Source NAT-enabled network offering is shown in the figure "Nuage VSP Source NAT-enabled Network Offering" below.
+
+.. figure:: ../_static/images/nuage_source_nat_net_off.png
+
+   Nuage VSP Source NAT-enabled Network Offering
+
+Nuage VSP Static NAT via the Underlay Feature Support For CloudStack
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Static NAT is supported in Nuage VSP as FIP (Floating IP). Prior to Nuage VSP v3.2, FIP in Nuage VSP required a VXLAN GW/PE to be present in the data center. In Nuage VSP v3.2 and above FIP is supported via the underlay, which removes the requirement for a GW/PE in the DC.
+
+For the Static NAT without GW/PE feature to be operational in the CloudStack plugin, FIP in Nuage VSP must be configured to use the underlay. This operation takes place during Nuage VSP installation; instructions can be found in the Nuage VSP Install Guide.
+
+A new API called ``nuageunderlayvlaniprange`` has been introduced to enable/disable Static NAT via the Underlay feature support for CloudStack public IP ranges being used for Static NAT service. This API specifies whether the FIP to underlay support is required for the corresponding FIP subnet in Nuage VSD since there is no GW/PE in the data center. When the ``nuageunderlayvlaniprange`` API has been enabled/disabled for a public IP range and Static NAT is enabled on at-least one of its Public IPs, the plugin creates the corresponding shared FIP subnet in Nuage VSD using the ``sharednetworkresources`` API with the underlay flag set accordingly. The ``nuageunderlayvlaniprange`` API usage is shown in the figure "nuageunderlayvlaniprange API Usage" below.
+
+.. figure:: ../_static/images/nuage_underlay_api_usage.png
+
+   nuageunderlayvlaniprange API Usage
+
+By default, the Nuage VSP Plugin creates the corresponding shared FIP subnet in Nuage VSD with the underlay flag set to false (disabled). There is no support for the ``nuageunderlayvlaniprange`` API from the CloudStack UI.
+
+.. note::
+   Enabling/disabling the ``nuageunderlayvlaniprange`` API for CloudStack public IP ranges is supported only before the Nuage VSP plugin creates the corresponding shared FIP subnet in Nuage VSD. After a shared FIP subnet is created in Nuage VSD, its underlay flag cannot be changed. To change the underlay flag for a given shared FIP subnet, delete the Public vLanIPRange, recreate it and enable/disable the ``nuageunderlayvlaniprange`` API for it.
+
 
 Appendix
 --------
-Nuage VSD API
-~~~~~~~~~~~~~
 
-To add Nuage VSP as Network Service Provider, 
+Configure Nuage VSP API
+~~~~~~~~~~~~~~~~~~~~~~~
 
-1.  Add the specified network service provider:
+To configure Nuage VSP as a Network Service Provider in the CloudStack Zone.
 
-::
-
-        cloudmonkey add networkserviceprovider name=NuageVsp physicalnetworkid=<physicalNetworkId>
-
-2.  Add the specified Nuage VSD:
+1.  Add Nuage VSP as a Network Service Provider in the Physical Network 2:
 
 ::
 
-    cloudmonkey add nuagevspdevice physicalnetworkid=<physicalNetworkId> hostname=<hostnameOfNuageVsp> username=<usernameOfNuageVspUser> password=<passwordOfNuageVspUser> port=<portUsedByNuageVsp> apiversion=<apiVersionOfNuageVsp> retrycount=<nrOfRetriesOnFailure> retryinterval=<intervalBetweenRetries>
+   cloudmonkey add networkserviceprovider name=NuageVsp physicalnetworkid=<physicalNetwork2Id>
+
+2.  Add the Nuage VSD as a Nuage VSP Device in the Physical Network 2:
+
+::
+
+    cloudmonkey add nuagevspdevice physicalnetworkid=<physicalNetwork2Id> hostname=<hostnameOfNuageVsp> username=<usernameOfNuageVspUser> password=<passwordOfNuageVspUser> port=<portUsedByNuageVsp> apiversion=<apiVersionOfNuageVsp> retrycount=<nrOfRetriesOnFailure> retryinterval=<intervalBetweenRetries>
